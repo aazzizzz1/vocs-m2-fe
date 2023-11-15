@@ -343,8 +343,6 @@ export const CallActivityProvider = (props) => {
         console.log(data);
         setSuccessMessage("Update Account successful!"); // Set success message
         setErrorMessageUpdate(""); // Clear error message
-        // window.location.href = "/account-setting";
-        // navigate(`/signin`)
         setfetchStatus(true);
         setOpenModalRename(false);
         setShowToast(true);

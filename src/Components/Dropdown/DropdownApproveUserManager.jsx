@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const DropdownApproveUserManager = () => {
   return (
@@ -39,12 +40,12 @@ const DropdownApproveUserManager = () => {
           aria-labelledby="dropdownBottomApproveButton"
         >
           <li>
-            <a
-              href="#a"
+            <Link
+              to="/"
               className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
             >
               Dashboard
-            </a>
+            </Link>
           </li>
           <li>
             <a

@@ -113,8 +113,7 @@ export const UserProvider = (props) => {
         console.log(data);
         setSuccessMessage("Update Password successful!"); // Set success message
         setErrorMessage(""); // Clear error message
-        window.location.href = "/account-setting";
-        // navigate(`/signin`)
+        navigate(`/account-setting`)
       })
       .catch((err) => {
         let error = err.response.data.message;
@@ -174,8 +173,8 @@ export const UserProvider = (props) => {
         console.log(data);
         setSuccessMessage("Update Account successful!"); // Set success message
         setErrorMessage(""); // Clear error message
-        window.location.href = "/account-setting";
-        // navigate(`/signin`)
+        // window.location.href = "/account-setting";
+        navigate(`/account-setting`)
       })
       .catch((err) => {
         let error = err.response.data.message;

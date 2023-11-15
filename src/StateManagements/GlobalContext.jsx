@@ -10,6 +10,9 @@ export const GlobalProvider = (props) => {
   let navigate = useNavigate();
   const {REACT_APP_API} = process.env;
 
+  //Modal
+  const [openModal, setOpenModal] = useState(false);
+
   //SIGN UP
   const [formSubmitted, setFormSubmitted] = useState(false); // Track form submission
   const [termsAccepted, setTermsAccepted] = useState(false);
@@ -26,10 +29,12 @@ export const GlobalProvider = (props) => {
 
   const handleAcceptClick = () => {
     setTermsAccepted(true);
+    setOpenModal(false)
   };
 
   const handleDecelineClick = () => {
     setTermsAccepted(false);
+    setOpenModal(false)
   };
 
   const [inputSignUp, setInputSignUp] = useState({
@@ -99,8 +104,8 @@ export const GlobalProvider = (props) => {
         console.log(data);
         setSuccessMessage("Registrasi successful!"); // Set success message
         setErrorMessage(""); // Clear error message
-        window.location.href = "/signin";
-        // navigate(`/signin`)
+        // window.location.href = "/signin";
+        navigate(`/signin`)
       })
       .catch((err) => {
         // let error = JSON.stringify(err.response.data, null, 2);
@@ -119,6 +124,19 @@ export const GlobalProvider = (props) => {
         setSuccessMessage(""); // Clear success message
       });
   };
+
+  // Function to parse cookie expires time
+const parseCookieExpires = (setCookieHeader) => {
+  const expiresMatch = /expires=([^;]+)/.exec(setCookieHeader);
+  if (expiresMatch) {
+    const expiresValue = expiresMatch[1];
+    const expiresTimestamp = new Date(expiresValue).getTime();
+    return new Date(expiresTimestamp);
+  }
+  // Default to 1 day if no valid expires information is found
+  const oneDayInMillis = 24 * 60 * 60 * 1000;
+  return new Date(Date.now() + oneDayInMillis);
+};
 
   //SIGN IN
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -167,21 +185,27 @@ export const GlobalProvider = (props) => {
       })
       .then((res) => {
         let data = res.data;
-        Cookies.set(`token`, data.data.accessToken, { expires: 1 });
-        Cookies.set(`user`, JSON.stringify(data.user.username), { expires: 1 });
-        Cookies.set(`id`, JSON.stringify(data.user.id), { expires: 1 });
-        Cookies.set(`full_name`, JSON.stringify(data.user.full_name), { expires: 1 });
-        Cookies.set(`role`, JSON.stringify(data.user.role), { expires: 1 });
-        console.log(data);
-        console.log(Cookies.get(`token`));
-        console.log(Cookies.get(`user`));
-        console.log(Cookies.get(`id`));
-        console.log(Cookies.get(`full_name`));
-        console.log(Cookies.get(`role`));
-        setSuccessMessage("Login successful!");
-        setErrorMessage("");
-        setShowToast(true)
-        window.location.href = "/";
+      let expiresHeader = res.headers['set-cookie'];
+      let tokenExpires = parseCookieExpires(expiresHeader);
+      
+      Cookies.set(`token`, data.data.accessToken, { expires: tokenExpires });
+      Cookies.set(`user`, JSON.stringify(data.user.username), { expires: tokenExpires });
+      Cookies.set(`id`, JSON.stringify(data.user.id), { expires: tokenExpires });
+      Cookies.set(`full_name`, JSON.stringify(data.user.full_name), { expires: tokenExpires });
+      Cookies.set(`role`, JSON.stringify(data.user.role), { expires: tokenExpires });
+
+      console.log(data);
+      console.log('Waktu Kadaluwarsa Cookie:', tokenExpires);
+      console.log(Cookies.get(`token`));
+      console.log(Cookies.get(`user`));
+      console.log(Cookies.get(`id`));
+      console.log(Cookies.get(`full_name`));
+      console.log(Cookies.get(`role`));
+
+      setSuccessMessage("Login successful!");
+      setErrorMessage("");
+      setShowToast(true);
+      navigate(`/`);
       })
       .catch((err) => {
         let error = err.response.data.message;
@@ -199,384 +223,6 @@ export const GlobalProvider = (props) => {
         }
         setShowToast(true)
       });
-  };
-
-
-  //DASHBOARD
-
-  const [fetchStatus, setfetchStatus] = useState(true);
-
-  // state data
-  let [data, setData] = useState(null); //harus memakai state karena react akan merender parameter ini sialisasi terlebih dahulu, disarankan null agar enak pengkondisianya
-
-  // Menginputkan Data kedalam form
-  const [curretID, setcurrentID] = useState(-1);
-
-  //Function Fetch Data
-  let fetchData = () => {
-    const fetchData = async () => {
-      try {
-        const result = await axios.get(
-          "https://backendexample.sanbercloud.com/api/student-scores"
-        );
-        let hasil = result.data; // Data API
-        setData([...hasil]); // assign data ke dalam method setData Bisa menggunakan SPREAD OPERATOR atau tidak
-        // console.log(result.data); // mengambil hanya datanya saja akan ada array of object dari API
-        // console.log(result); // menampilkan result dari API berupa object asli APInya
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchData();
-    setfetchStatus(false);
-    console.log(data) // menampilkan data yang sudah di assign kedalam setData
-  };
-
-  //Fatch Data Dashboard
-  const [input, setInput] = useState({
-    name: "",
-    course: "",
-    score: 0,
-  });
-
-  // Method Handle Input
-  const handleInput = (events) => {
-    let value = events.target.value;
-    let name = events.target.name;
-
-    // console.log(`${name}, ${score}, ${course}, ${value}`)
-
-    if (name === "name") {
-      setInput({ ...input, name: value });
-    } else if (name === "course") {
-      setInput({ ...input, course: value });
-    } else if (name === "score") {
-      setInput({ ...input, score: value });
-    }
-  };
-  //Method Mengganti Nilai
-  let handleNilai = (nilai) => {
-    if (nilai >= 80) {
-      return "A";
-    } else if (nilai >= 70 && nilai < 80) {
-      return "B";
-    } else if (nilai >= 60 && nilai < 70) {
-      return "C";
-    } else if (nilai >= 50 && nilai < 60) {
-      return "D";
-    } else {
-      return "E";
-    }
-  };
-
-  // Submit Form Create
-  const handleSubmit = (events) => {
-    events.preventDefault();
-
-    const { name, course, score } = input;
-    if (curretID === -1) {
-      axios
-        .post("https://backendexample.sanbercloud.com/api/student-scores", {
-          name,
-          course,
-          score,
-        })
-        .then((result) => {
-          console.log(result);
-          setfetchStatus(true);
-          navigate("/");
-        })
-        .catch((error) => {
-          alert(error);
-        });
-    } else {
-      axios
-        .put(
-          `https://backendexample.sanbercloud.com/api/student-scores/${curretID}`,
-          {
-            name,
-            course,
-            score,
-          }
-        )
-        .then((result) => {
-          console.log(result);
-          setfetchStatus(true);
-        })
-        .catch((error) => {
-          alert(error);
-        });
-    }
-
-    //balikan lagi agar tidak bug agar bisa create data
-    setcurrentID(-1);
-
-    //balikin input ke deafault
-    setInput({
-      name: "",
-      course: "",
-      score: 0,
-    });
-  };
-
-  //Delete Data by ID
-  let handleDelete = (e, userId) => {
-    e.preventDefault();
-    axios
-      .delete(
-        `https://backendexample.sanbercloud.com/api/student-scores/${userId}`
-      )
-      .then((result) => {
-        // console.log(result)
-        setfetchStatus(true);
-      })
-      .catch((error) => {
-        alert(error);
-      });
-  };
-
-  //Menampilkan Data Kedalam Form
-  let handleEdit = (e, userId) => {
-    setcurrentID(userId);
-
-    e.preventDefault();
-    axios
-      .get(
-        `https://backendexample.sanbercloud.com/api/student-scores/${userId}`
-      )
-      .then((res) => {
-        let reslutedit = res.data;
-        // console.log(reslutedit)
-        setInput({
-          name: reslutedit.name,
-          course: reslutedit.course,
-          score: reslutedit.score,
-        });
-      })
-      .catch((err) => {
-        alert(err);
-      });
-  };
-
-  //Final Project
-  let fetchDataFinalProject = () => {
-    const fetchDataFinalProject = async () => {
-      try {
-        const result = await axios.get(
-          "https://dev-example.sanbercloud.com/api/job-vacancy"
-        );
-        let hasil = result.data; // Data API
-        console.log(hasil.data);
-        setData([...hasil.data]);
-        // assign data ke dalam method setData Bisa menggunakan SPREAD OPERATOR atau tidak
-        // console.log(result.data); // mengambil hanya datanya saja akan ada array of object dari API
-        // console.log(result); // menampilkan result dari API berupa object asli APInya
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchDataFinalProject();
-    setfetchStatus(false);
-    // console.log(data) // menampilkan data yang sudah di assign kedalam setData
-  };
-
-  function batasiKata(dasar, jumlahKata) {
-    // Check if dasar is null or undefined
-    if (dasar === null || dasar === undefined) {
-        return 'Invalid input'; // Or any appropriate default value or error message
-    }
-
-    // Mengubah string menjadi array kata
-    let kata = dasar.split(' ');
-
-    // Memeriksa apakah jumlah kata melebihi batas yang ditentukan
-    if (kata.length > jumlahKata) {
-        // Mengambil hanya sejumlah kata yang diinginkan
-        kata = kata.slice(0, jumlahKata);
-
-        // Menggabungkan kembali array kata menjadi string dan menambahkan titik-titik
-        let hasil = kata.join(' ') + '...';
-        return hasil;
-    }
-
-    // Jika jumlah kata dalam string tidak melebihi batas, mengembalikan string asli
-    return dasar;
-}
-
-  // Create Data Tugas
-  const [inputFinalProject, setInputFinalProject] = useState({
-    title: "",
-    job_description: "",
-    job_qualification: "",
-    job_type: "",
-    job_tenure: "",
-    job_status: 0,
-    company_name: "",
-    company_image_url: "",
-    company_city: "",
-    salary_min: 0,
-    salary_max: 0,
-  });
-
-  const handleInputFinalProject = (events) => {
-    let value = events.target.value;
-    let name = events.target.name;
-    // console.log(`${name}, ${score}, ${course}, ${value}`)
-
-    if (name === "title") {
-      setInputFinalProject({ ...inputFinalProject, title: value });
-    } else if (name === "job_description") {
-      setInputFinalProject({ ...inputFinalProject, job_description: value });
-    } else if (name === "job_qualification") {
-      setInputFinalProject({ ...inputFinalProject, job_qualification: value });
-    } else if (name === "job_type") {
-      setInputFinalProject({ ...inputFinalProject, job_type: value });
-    } else if (name === "job_tenure") {
-      setInputFinalProject({ ...inputFinalProject, job_tenure: value });
-    } else if (name === "job_status") {
-      setInputFinalProject({ ...inputFinalProject, job_status: value });
-    } else if (name === "company_name") {
-      setInputFinalProject({ ...inputFinalProject, company_name: value });
-    } else if (name === "company_image_url") {
-      setInputFinalProject({ ...inputFinalProject, company_image_url: value });
-    } else if (name === "company_city") {
-      setInputFinalProject({ ...inputFinalProject, company_city: value });
-    } else if (name === "salary_min") {
-      setInputFinalProject({ ...inputFinalProject, salary_min: value });
-    } else if (name === "salary_max") {
-      setInputFinalProject({ ...inputFinalProject, salary_max: value });
-    }
-  };
-
-  // Create Data Function dengan Token
-  const handleCreateDataFinalProject = (events) => {
-    events.preventDefault();
-    const {
-      title,
-      job_description,
-      job_qualification,
-      job_type,
-      job_tenure,
-      job_status,
-      company_name,
-      company_image_url,
-      company_city,
-      salary_min,
-      salary_max,
-    } = inputFinalProject;
-
-    //Menambahkan Token pada Header
-    const token = Cookies.get("token"); // Mengambil token dari Cookies
-    // Menambahkan token ke header permintaan
-    const headers = {
-      Authorization: `Bearer ${token}`,
-    };
-
-    axios
-      .post(
-        "https://dev-example.sanbercloud.com/api/job-vacancy",
-        {
-          title,
-          job_description,
-          job_qualification,
-          job_type,
-          job_tenure,
-          job_status,
-          company_name,
-          company_image_url,
-          company_city,
-          salary_min,
-          salary_max,
-        },
-        { headers }
-      ) // Menambahkan headers ke permintaan
-      .then((result) => {
-        console.log(result);
-        setfetchStatus(true);
-        window.location.href = "/kanban";
-        // navigate("/");
-      })
-      .catch((error) => {
-        console.log(error);
-        alert(error);
-      });
-
-    // Reset input to default values
-    setInputFinalProject({
-      title: "",
-      job_description: "",
-      job_qualification: "",
-      job_type: "",
-      job_tenure: "",
-      job_status: 0,
-      company_name: "",
-      company_image_url: "",
-      company_city: "",
-      salary_min: 0,
-      salary_max: 0,
-    });
-  };
-
-  // Edit Data Function
-  const handleEditDataFinalProject = (events, id) => {
-    events.preventDefault();
-    const {
-      title,
-      job_description,
-      job_qualification,
-      job_type,
-      job_tenure,
-      job_status,
-      company_name,
-      company_image_url,
-      company_city,
-      salary_min,
-      salary_max,
-    } = inputFinalProject;
-    const token = Cookies.get("token"); // Mengambil token dari Cookies
-    const headers = {
-      Authorization: `Bearer ${token}`,
-    };
-    axios
-      .put(
-        `https://dev-example.sanbercloud.com/api/job-vacancy/${id}`,
-        {
-          title,
-          job_description,
-          job_qualification,
-          job_type,
-          job_tenure,
-          job_status,
-          company_name,
-          company_image_url,
-          company_city,
-          salary_min,
-          salary_max,
-        },
-        { headers }
-      )
-      .then((result) => {
-        console.log(result);
-        setfetchStatus(true);
-      })
-      .catch((error) => {
-        alert(error);
-      });
-
-    // Reset input to default values
-    setInput({
-      title: "",
-      job_description: "",
-      job_qualification: "",
-      job_type: "",
-      job_tenure: "",
-      job_status: 0,
-      company_name: "",
-      company_image_url: "",
-      company_city: "",
-      salary_min: 0,
-      salary_max: 0,
-    });
   };
 
   //Membuat Variable untuk semua state dan function
@@ -606,22 +252,9 @@ export const GlobalProvider = (props) => {
     validationPass,
     setValidationPass,
     showToast,
-    //Data Dashboard
-    input,
-    setInput,
-    fetchStatus,
-    setfetchStatus,
-    data,
-    setData,
-    curretID,
-    setcurrentID,
-    //Final Project
-    inputFinalProject,
-    setInputFinalProject,
-    // //Kanban
-    // jobs,
-    // currentPage,
-    // totalPages,
+    //Modals
+    setOpenModal,
+    openModal,
   };
 
   // Variable Global Function
@@ -638,22 +271,7 @@ export const GlobalProvider = (props) => {
     handleLogin,
     handleTogglePasswordVisibility,
     //Data Dashboard
-    fetchData,
-    handleInput,
-    handleNilai,
-    handleSubmit,
-    handleDelete,
-    handleEdit,
     navigate,
-    //Final Project
-    fetchDataFinalProject,
-    batasiKata,
-    handleInputFinalProject,
-    handleCreateDataFinalProject,
-    handleEditDataFinalProject,
-    // //Kanban
-    // fetchJobs,
-    // handlePageChange,
   };
   // Membuat Global Context State
   return (

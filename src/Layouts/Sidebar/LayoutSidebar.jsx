@@ -5,6 +5,7 @@ import ProfileLayout from "./ProfileLayout";
 import SidebarLayout from "./SidebarLayout";
 import LogoLen from "../../Assets/Images/LogoLen.png";
 import Clock from "../../Components/Clock/Clock";
+import { Link } from "react-router-dom";
 
 const LayoutSidebar = (props) => {
 
@@ -47,8 +48,8 @@ const LayoutSidebar = (props) => {
               </svg>
               <span className="sr-only">Toggle sidebar</span>
             </button>
-            <a
-              href="/"
+            <Link
+              to="/"
               className="flex items-center justify-between mr-4"
             >
               <img
@@ -59,7 +60,7 @@ const LayoutSidebar = (props) => {
               {/* <span className="self-center text-lg text-gray-900 font-semibold whitespace-nowrap dark:text-white">
                 PT LEN INDUSTRI
               </span> */}
-            </a>
+            </Link>
               <Clock/>
           </div>
           <div className="flex items-center lg:order-2">

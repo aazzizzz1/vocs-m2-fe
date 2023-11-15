@@ -75,8 +75,8 @@ const SidebarLayout = () => {
         {/* Item Sidebar */}
         <ul className="space-y-2">
           <li>
-            <a
-              href="/"
+            <Link
+              to="/"
               className={`flex items-center p-2 text-base font-medium rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 group ${
                 isActiveLink("/")
                   ? "bg-blue-600 text-white hover:text-gray-700"
@@ -108,7 +108,7 @@ const SidebarLayout = () => {
                 </g>
               </svg>
               <p className="ml-3">Dashboard</p>
-            </a>
+            </Link>
           </li>
           <li>
             <Accordion
@@ -129,8 +129,8 @@ const SidebarLayout = () => {
                 class="py-2 space-y-2 ml-5 dark:bg-gray-900 border-none"
                 >
                   <li>
-                <a
-                  href="/server-manager"
+                <Link
+                to="/server-manager"
                   className={`flex items-center p-2 text-base font-medium rounded-lg hover:bg-gray-300 dark:hover:bg-gray-700 group ${
                     isActiveLink("/server-manager")
                       ? "bg-blue-600 text-white hover:text-gray-700"
@@ -162,11 +162,11 @@ const SidebarLayout = () => {
                     </g>
                   </svg>
                   <p className="ml-3">Server Manager</p>
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="/device-manager"
+                <Link
+                  to="/device-manager"
                   className={`flex items-center p-2 text-base font-medium rounded-lg hover:bg-gray-300 dark:hover:bg-gray-700 group ${
                     isActiveLink("/device-manager")
                       ? "bg-blue-600 text-white hover:text-gray-700"
@@ -198,11 +198,11 @@ const SidebarLayout = () => {
                     </g>
                   </svg>
                   <p className="ml-3">Device Manager</p>
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="/device-activity"
+                <Link
+                  to="/device-activity"
                   className={`flex items-center p-2 text-base font-medium rounded-lg hover:bg-gray-300 dark:hover:bg-gray-700 group ${
                     isActiveLink("/device-activity")
                       ? "bg-blue-600 text-white hover:text-gray-700"
@@ -234,11 +234,11 @@ const SidebarLayout = () => {
                     </g>
                   </svg>
                   <p className="ml-3">Device Activity</p>
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="/sip-account"
+                <Link
+                  to="/sip-account"
                   className={`flex items-center p-2 text-base font-medium rounded-lg hover:bg-gray-300 dark:hover:bg-gray-700 group ${
                     isActiveLink("/sip-account")
                       ? "bg-blue-600 text-white hover:text-gray-700"
@@ -270,11 +270,11 @@ const SidebarLayout = () => {
                     </g>
                   </svg>
                   <p className="ml-3">SIP Account</p>
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="/group-list"
+                <Link
+                  to="/group-list"
                   className={`flex items-center p-2 text-base font-medium rounded-lg hover:bg-gray-300 dark:hover:bg-gray-700 group ${
                     isActiveLink("/group-list")
                       ? "bg-blue-600 text-white hover:text-gray-700"
@@ -306,7 +306,7 @@ const SidebarLayout = () => {
                     </g>
                   </svg>
                   <p className="ml-3">Group List</p>
-                </a>
+                </Link>
               </li>
               <li>
                 <Link

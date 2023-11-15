@@ -367,8 +367,6 @@ export const CommunicationMatrixProvider = (props) => {
         console.log(data);
         setSuccessMessage("Update Account successful!"); // Set success message
         setErrorMessageUpdate(""); // Clear error message
-        // window.location.href = "/account-setting";
-        // navigate(`/signin`)
         setfetchStatus(true);
         setOpenModalEditAccount(false);
         setShowToast(true);

@@ -6,6 +6,9 @@ import LogoLen from "../../Assets/Images/LogoLen.png";
 import ErrorButton from "../../Components/Button/ErrorButton";
 import SuccessToastAuth from "../../Components/Toast/SucessToastAuth";
 import ErrorToastAuth from "../../Components/Toast/ErrorToastAuth";
+import TooltipAuth from "../../Components/Tooltip/TooltipAuth";
+import { Modal } from "flowbite-react";
+import { Link } from "react-router-dom";
 
 const SignUp = () => {
   //Memanggil state dari GlobalContext dan dari destructuring dibawah ini
@@ -23,6 +26,8 @@ const SignUp = () => {
     validation,
     validationPass,
     validationUser,
+    setOpenModal,
+    openModal,
   } = state;
 
   const {
@@ -118,10 +123,9 @@ const SignUp = () => {
                 >
                   Password
                 </label>
+                <TooltipAuth content={
                 <div
-                  className="flex items-center justify-between relative"
-                  data-popover-target="popover-password"
-                  data-popover-placement="right"
+                  className="flex items-center justify-between relative w-80 md:w-96"
                 >
                   <input
                     className={`bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ${
@@ -145,6 +149,7 @@ const SignUp = () => {
                     {passwordVisible ? <EyeClosedIcon /> : <EyeOpenIcon />}
                   </span>
                 </div>
+                }/>
                 {formSubmitted && !inputSignUp.password && (
                   <div className="flex items-center mt-2 text-sm text-red-600 dark:text-red-500">
                   <span><ErrorButton/></span> Password is Required
@@ -178,10 +183,9 @@ const SignUp = () => {
                 >
                   Confirm password
                 </label>
+                <TooltipAuth content={
                 <div
-                  className="flex items-center justify-between relative"
-                  data-popover-target="popover-password"
-                  data-popover-placement="right"
+                  className="flex items-center justify-between relative w-80 md:w-96"
                 >
                   <input
                     value={inputSignUp.confirm_password}
@@ -207,6 +211,7 @@ const SignUp = () => {
                     )}
                   </span>
                 </div>
+                }/>
                 {formSubmitted &&
                   inputSignUp.password !== inputSignUp.confirm_password && (
                     <div className="flex items-center mt-2 text-sm text-red-600 dark:text-red-500">
@@ -235,9 +240,7 @@ const SignUp = () => {
                     <span className="font-medium text-blue-600 hover:underline dark:text-blue-500">
                       {/* Modal toggle */}
                       <button
-                        onClick={handleAccept}
-                        data-modal-target="staticModal"
-                        data-modal-toggle="staticModal"
+                        onClick={() => setOpenModal(true)}
                         type="button"
                       >
                         User Agreement & Privacy Policy
@@ -254,12 +257,12 @@ const SignUp = () => {
               </button>
               <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                 Already have an account?{" "}
-                <a
-                  href="/signin"
+                <Link
+                  to="/signin"
                   className="font-medium text-blue-600 hover:underline dark:text-blue-500"
                 >
                   Sign in
-                </a>
+                </Link>
               </p>
             </form>
           </div>
@@ -267,46 +270,17 @@ const SignUp = () => {
       </div>
     </div>
       {/* Main Terms and Conditions Modal */}
-      <div
-        id="staticModal"
-        data-modal-backdrop="static"
-        tabIndex={-1}
-        aria-hidden="true"
-        className="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full"
+      {/* Create Modal End block */}
+      <Modal
+        size={"3xl"}
+        dismissible
+        show={openModal}
+        onClose={() => setOpenModal(false)}
       >
-        <div className="relative w-full max-w-2xl max-h-full">
-          {/* Modal content */}
-          <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
-            {/* Modal header */}
-            <div className="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
-                Static modal
-              </h3>
-              <button
-                type="button"
-                className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                data-modal-hide="staticModal"
-              >
-                <svg
-                  className="w-3 h-3"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 14 14"
-                >
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-                  />
-                </svg>
-                <span className="sr-only">Close modal</span>
-              </button>
-            </div>
-            {/* Modal body */}
-            <div className="p-6 space-y-6">
+        <Modal.Header>Add New User</Modal.Header>
+        <Modal.Body>
+          {/* Modal body */}
+          <div className="p-6 space-y-6">
               <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
                 With less than a month to go before the European Union enacts
                 new consumer privacy laws for its citizens, companies around the
@@ -320,8 +294,9 @@ const SignUp = () => {
                 data breaches that could personally affect them.
               </p>
             </div>
-            {/* Modal footer */}
-            <div className="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
+        </Modal.Body>
+        <Modal.Footer>
+        <div className="flex items-center space-x-2 ">
               <button
                 data-modal-hide="staticModal"
                 type="button"
@@ -339,122 +314,8 @@ const SignUp = () => {
                 Decline
               </button>
             </div>
-          </div>
-        </div>
-      </div>
-      {/* Popover */}
-      <div
-        data-popover=""
-        id="popover-password"
-        role="tooltip"
-        className="absolute z-10 invisible inline-block text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 w-72 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-400"
-      >
-        <div className="p-3 space-y-2">
-          <h3 className="font-semibold text-gray-900 dark:text-white">
-            Follow these instructions to secure your password:
-          </h3>
-          {/* <div className="grid grid-cols-4 gap-2">
-            <div className="h-1 bg-orange-300 dark:bg-orange-400" />
-            <div className="h-1 bg-orange-300 dark:bg-orange-400" />
-            <div className="h-1 bg-gray-200 dark:bg-gray-600" />
-            <div className="h-1 bg-gray-200 dark:bg-gray-600" />
-          </div> */}
-          {/* <p>It’s better to have:</p> */}
-          <ul>
-          <li className="flex items-center mb-1">
-              <svg
-                className="w-3.5 h-3.5 mr-2 text-green-400 dark:text-green-500"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 16 12"
-              >
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M1 5.917 5.724 10.5 15 1.5"
-                />
-              </svg>
-              Must have at least 8 characters
-            </li>
-            <li className="flex items-center mb-1">
-              <svg
-                className="w-3.5 h-3.5 mr-2 text-green-400 dark:text-green-500"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 16 12"
-              >
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M1 5.917 5.724 10.5 15 1.5"
-                />
-              </svg>
-              Must have at least 1 number
-            </li>
-            <li className="flex items-center mb-1">
-            <svg
-                className="w-3.5 h-3.5 mr-2 text-green-400 dark:text-green-500"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 16 12"
-              >
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M1 5.917 5.724 10.5 15 1.5"
-                />
-              </svg>
-              Must have at least 1 symbol (#$&amp;)
-            </li>
-            <li className="flex items-center mb-1">
-              <svg
-                className="w-3.5 h-3.5 mr-2 text-green-400 dark:text-green-500"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 16 12"
-              >
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M1 5.917 5.724 10.5 15 1.5"
-                />
-              </svg>
-              Must have upper &amp; lower case letters
-            </li>
-            <li className="flex items-center">
-              <svg
-                className="w-3 h-3 mr-2.5 text-red-600 dark:text-red-800"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 14 14"
-              >
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-                />
-              </svg>
-              Password cannot be the same as username
-            </li>
-          </ul>
-        </div>
-        <div data-popper-arrow="" />
-      </div>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 };

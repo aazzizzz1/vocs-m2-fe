@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Notification = () => {
   return (
@@ -30,8 +31,8 @@ const Notification = () => {
           Notifications
         </div>
         <div>
-          <a
-            href="a"
+          <Link
+            to="a"
             className="flex py-3 px-4 border-b hover:bg-gray-100 dark:hover:bg-gray-600 dark:border-gray-600"
           >
             <div className="flex-shrink-0">
@@ -65,9 +66,9 @@ const Notification = () => {
                 a few moments ago
               </div>
             </div>
-          </a>
-          <a
-            href="a"
+          </Link>
+          <Link
+            to="a"
             className="flex py-3 px-4 border-b hover:bg-gray-100 dark:hover:bg-gray-600 dark:border-gray-600"
           >
             <div className="flex-shrink-0">
@@ -103,9 +104,9 @@ const Notification = () => {
                 10 minutes ago
               </div>
             </div>
-          </a>
-          <a
-            href="a"
+          </Link>
+          <Link
+            to="a"
             className="flex py-3 px-4 border-b hover:bg-gray-100 dark:hover:bg-gray-600 dark:border-gray-600"
           >
             <div className="flex-shrink-0">
@@ -145,9 +146,9 @@ const Notification = () => {
                 44 minutes ago
               </div>
             </div>
-          </a>
-          <a
-            href="a"
+          </Link>
+          <Link
+            to="a"
             className="flex py-3 px-4 border-b hover:bg-gray-100 dark:hover:bg-gray-600 dark:border-gray-600"
           >
             <div className="flex-shrink-0">
@@ -187,9 +188,9 @@ const Notification = () => {
                 1 hour ago
               </div>
             </div>
-          </a>
-          <a
-            href="a"
+          </Link>
+          <Link
+            to="a"
             className="flex py-3 px-4 hover:bg-gray-100 dark:hover:bg-gray-600"
           >
             <div className="flex-shrink-0">
@@ -222,10 +223,10 @@ const Notification = () => {
                 3 hours ago
               </div>
             </div>
-          </a>
+          </Link>
         </div>
-        <a
-          href="a"
+        <Link
+          to="a"
           className="block py-2 text-md font-medium text-center text-gray-900 bg-gray-50 hover:bg-gray-100 dark:bg-gray-600 dark:text-white dark:hover:underline"
         >
           <div className="inline-flex items-center">
@@ -245,7 +246,7 @@ const Notification = () => {
             </svg>
             View all
           </div>
-        </a>
+        </Link>
       </div>
     </>
   );

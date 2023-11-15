@@ -4,12 +4,15 @@ import { UserContext } from "../../StateManagements/UserContext";
 import ErrorToast from "../../Components/Toast/ErrorToast";
 import { Dropdown } from "flowbite-react";
 import SuccessToast from "../../Components/Toast/SuccessToast";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import OnlineStatus from "../../Components/Toast/OnlineStatus";
 
 const ProfileLayout = () => {
+  const navigate = useNavigate();
+  
   const handleLogout = () => {
     Cookies.remove("token");
-    window.location.href = "/signin";
+    navigate(`/signin`)
   };
 
   const userId = JSON.parse(Cookies.get("id"));
@@ -49,6 +52,7 @@ const ProfileLayout = () => {
             message={errorMessage}
           />
         )}
+        <OnlineStatus/>
       <div className="flex mx-3 text-sm rounded-lg md:mr-0 p-[2px] hover:border-gray-400 hover:border-solid hover:border-2">
         <Dropdown
           label={

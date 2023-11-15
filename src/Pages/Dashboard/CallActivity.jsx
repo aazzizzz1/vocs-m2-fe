@@ -9,6 +9,7 @@ import { Accordion, Button, Dropdown, Modal } from "flowbite-react";
 import { CallActivityContext } from "../../StateManagements/CallActivityContext";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import HorizontalDropDown from "../../Assets/Svg/CallActivity/HorizontalDropDown";
+import { Link } from "react-router-dom";
 
 const CallActivity = () => {
   const { stateCallActivity, handleFunctionCallActivity } =
@@ -85,7 +86,8 @@ const CallActivity = () => {
                   </svg>
                   Manage Channel
                 </button>
-                <a href="/">
+                <Link 
+                to="/">
                   <button
                     type="button"
                     className="px-4 w-full py-2 justify-center text-base font-medium text-gray-900 bg-white border border-gray-200 rounded-r-md hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white focus:outline-none text-center inline-flex items-center "
@@ -107,7 +109,7 @@ const CallActivity = () => {
                       />
                     </svg>
                   </button>
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -121,7 +123,7 @@ const CallActivity = () => {
               <Accordion>
                 <Accordion.Panel>
                   <Accordion.Title className="justify-normal focus:ring-2 bg-blue-200 hover:bg-blue-300">
-                    <div className="flex justify-between">
+                    <div className="flex justify-between items-center">
                       <div>Channel 1</div>
                       <div className="flex flex-row ml-24 mr-2 md:ml-[270px]">
                         <button
@@ -1244,180 +1246,6 @@ const CallActivity = () => {
                   </Accordion.Content>
                 </Accordion.Panel>
               </Accordion>
-            </div>
-            <div>
-              <h2 id="accordion-open-heading-1">
-                <div className="flex items-center justify-between w-full p-5 font-medium text-left text-gray-900 border border-b-0 border-gray-200 rounded-t-xl focus:ring-2 bg-blue-200 focus:ring-blue-300 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-blue-200 dark:hover:bg-gray-800">
-                  <button
-                    type="Button"
-                    className="flex items-center"
-                    data-accordion-target="#accordion-open-body-1"
-                    aria-expanded="true"
-                    aria-controls="accordion-open-body-1"
-                  >
-                    <svg
-                      data-accordion-icon=""
-                      className="w-3 h-3 rotate-180 shrink-0 mr-2"
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 10 6"
-                    >
-                      <path
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 5 5 1 1 5"
-                      />
-                    </svg>
-                    Channel 1
-                  </button>
-                  <div className="flex flex-row">
-                    <button
-                      data-modal-target="adduser-modal"
-                      data-modal-toggle="adduser-modal"
-                      type="button"
-                    >
-                      <PersonAdd />
-                    </button>
-                    <button
-                      id="dropdownRightButton"
-                      data-dropdown-toggle="dropdownRight"
-                      data-dropdown-placement="right"
-                      className="ml-2"
-                      type="button"
-                    >
-                      <Setting />
-                    </button>
-                  </div>
-                </div>
-              </h2>
-              <div
-                id="accordion-open-body-1"
-                className="hidden"
-                aria-labelledby="accordion-open-heading-1"
-              >
-                <div className="p-5 border rounded-b-xl border-gray-200 dark:border-gray-700 dark:bg-gray-900">
-                  <ul className="max-w-md space-y-1 text-gray-500 list-none list-inside dark:text-gray-400">
-                    <li className="flex justify-between">
-                      <div className="flex flex-row">
-                        <VolumeMute />
-                        <span className="mr-2 text-gray-900">Room AL 2</span>
-                      </div>
-                      <button
-                        id="dropdownMenuIconHorizontalButton"
-                        data-dropdown-toggle="dropdownDotsHorizontal"
-                        data-dropdown-placement="right"
-                        className="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                        type="button"
-                      >
-                        <svg
-                          className="w-5 h-5"
-                          aria-hidden="true"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="currentColor"
-                          viewBox="0 0 16 3"
-                        >
-                          <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
-                        </svg>
-                      </button>
-                    </li>
-                    <li className="flex justify-between">
-                      <div className="flex flex-row">
-                        <Speak />
-                        <span className="mr-2 text-blue-700">Room AU 1</span>
-                      </div>
-                      <button
-                        id="dropdownMenuIconHorizontalButton"
-                        data-dropdown-toggle="dropdownDotsHorizontal"
-                        data-dropdown-placement="right"
-                        className="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                        type="button"
-                      >
-                        <svg
-                          className="w-5 h-5"
-                          aria-hidden="true"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="currentColor"
-                          viewBox="0 0 16 3"
-                        >
-                          <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
-                        </svg>
-                      </button>
-                    </li>
-                    <li className="flex justify-between">
-                      <div className="flex flex-row">
-                        <Pause />
-                        <span className="mr-2 text-yellow-500">Room AD 3</span>
-                      </div>
-                      <button
-                        id="dropdownMenuIconHorizontalButton"
-                        data-dropdown-toggle="dropdownDotsHorizontal"
-                        data-dropdown-placement="right"
-                        className="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                        type="button"
-                      >
-                        <svg
-                          className="w-5 h-5"
-                          aria-hidden="true"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="currentColor"
-                          viewBox="0 0 16 3"
-                        >
-                          <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
-                        </svg>
-                      </button>
-                    </li>
-                    <li className="flex justify-between">
-                      <div className="flex flex-row">
-                        <Speak />
-                        <span className="mr-2 text-blue-700">Room AL 1</span>
-                      </div>
-                      <button
-                        id="dropdownMenuIconHorizontalButton"
-                        data-dropdown-toggle="dropdownDotsHorizontal"
-                        data-dropdown-placement="right"
-                        className="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                        type="button"
-                      >
-                        <svg
-                          className="w-5 h-5"
-                          aria-hidden="true"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="currentColor"
-                          viewBox="0 0 16 3"
-                        >
-                          <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
-                        </svg>
-                      </button>
-                    </li>
-                    <li className="flex justify-between">
-                      <div className="flex flex-row">
-                        <MicOff />
-                        <span className="mr-2 text-gray-900">Room AD 3</span>
-                      </div>
-                      <button
-                        id="dropdownMenuIconHorizontalButton"
-                        data-dropdown-toggle="dropdownDotsHorizontal"
-                        data-dropdown-placement="right"
-                        className="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                        type="button"
-                      >
-                        <svg
-                          className="w-5 h-5"
-                          aria-hidden="true"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="currentColor"
-                          viewBox="0 0 16 3"
-                        >
-                          <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
-                        </svg>
-                      </button>
-                    </li>
-                  </ul>
-                </div>
-              </div>
             </div>
           </div>
         </div>
